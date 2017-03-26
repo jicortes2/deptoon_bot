@@ -1,6 +1,7 @@
 import flask
 import telepot
 from os import environ
+from itertools import cycle
 try:
 	from Queue import Queue
 except ImportError:
@@ -14,11 +15,24 @@ SECRET = "/bot{}".format(TOKEN)
 URL = "	"
 BOT = telepot.Bot(TOKEN)
 UPDATE_QUEUE = Queue()
+dawg_list = cycle(['Dawg acuerdate de comprar las tazas', 'Dawg, no te ibai en marzo?',
+             'Hace cuanto no vas al supermercado dawg?', 'Te acuerdas donde queda el super dawg?',
+             'Dawg compra pan'
+             ])
 
 
 def on_chat_message(msg):
 	content_type, chat_type, chat_id = telepot.glance(msg)
-	BOT.sendMessage(chat_id, 'hello!')
+	
+	if content_type != 'text':
+        return
+	
+	text = msg["text"]
+	if text.lower().startswith('/chaqueteardawg'):
+		answer = dawg_list
+	else:
+		answer = "Yow yow"
+	BOT.sendMessage(chat_id, "{}".format(answer))
 
 
 BOT.message_loop({'chat': on_chat_message}, source=UPDATE_QUEUE)
