@@ -1,5 +1,5 @@
-import flask
 import telepot
+from flask import Flask, request
 from os import environ
 from itertools import cycle
 try:
@@ -10,7 +10,7 @@ except ImportError:
 
 TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
 # TOKEN = environ(BOT_TOKEN)
-app = flask(__name__)
+app = Flask(__name__)
 SECRET = "/bot{}".format(TOKEN)
 URL = "	"
 BOT = telepot.Bot(TOKEN)
