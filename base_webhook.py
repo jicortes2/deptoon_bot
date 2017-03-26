@@ -11,7 +11,7 @@ BOT_TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
 TOKEN = environ(BOT_TOKEN)
 app = flask(__name__)
 SECRET = "/bot{}".format(TOKEN)
-URL = "https://deptoon.herokuapp.com/"
+URL = "	"
 BOT = telepot.Bot(TOKEN)
 UPDATE_QUEUE = Queue()
 
@@ -29,5 +29,4 @@ def pass_update():
 	return 'OK'
 
 
-BOT.setWebhook()
 BOT.setWebhook(URL + SECRET)
