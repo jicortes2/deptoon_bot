@@ -8,8 +8,8 @@ except ImportError:
     from queue import Queue
 
 
-TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
-# TOKEN = environ(BOT_TOKEN)
+BOT_TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
+TOKEN = environ(BOT_TOKEN)
 app = Flask(__name__)
 SECRET = "/bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
