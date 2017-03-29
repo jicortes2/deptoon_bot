@@ -1,2 +1,2 @@
-telepot
-flask
+telepot==10.5
+Flask==0.12

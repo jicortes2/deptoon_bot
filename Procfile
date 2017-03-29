@@ -1,1 +1,1 @@
-'web: python3 base_webhook.py'
+'web: python base_webhook.py'
