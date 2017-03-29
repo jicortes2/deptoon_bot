@@ -15,7 +15,7 @@ Webhook path is '/abc', therefore:
 
 TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
 # HTOKEN = os.environ(TOKEN)
-SECRET = "/bot{}".format(TOKEN)
+SECRET = "bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
 
 
@@ -44,7 +44,7 @@ def pass_update():
     return 'OK'
 
 if __name__ == '__main__':
-    bot.setWebhook(URL)
+    bot.setWebhook(URL+SECRET)
     app.run(debug=True)
 """import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
