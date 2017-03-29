@@ -1,7 +1,7 @@
 from flask import Flask, request
 import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
-
+from time import sleep
 try:
     from Queue import Queue
 except ImportError:
@@ -13,12 +13,6 @@ Webhook path is '/abc', therefore:
 <webhook_url>: https://<base>/abc
 """
 
-TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
-# HTOKEN = os.environ(TOKEN)
-SECRET = "bot{}".format(TOKEN)
-URL = "https://api.telegram.org/"
-
-
 class MessageCounter(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
         super(MessageCounter, self).__init__(*args, **kwargs)
@@ -28,7 +22,10 @@ class MessageCounter(telepot.helper.ChatHandler):
         self._count += 1
         self.sender.sendMessage(self._count)
 
-
+TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
+# HTOKEN = os.environ(TOKEN)
+SECRET = "bot{}".format(TOKEN)
+URL = "https://api.telegram.org/"
 app = Flask(__name__)
 update_queue = Queue()  # channel between `app` and `bot`
 
@@ -45,6 +42,7 @@ def pass_update():
 
 if __name__ == '__main__':
     bot.setWebhook(URL+SECRET)
+    sleep(1)
     app.run(debug=True)
 """import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
