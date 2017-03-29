@@ -1,2 +1,1 @@
-web: python base_webhook.py
-heroku ps:scale web=1
+worker: python base_webhook.py
