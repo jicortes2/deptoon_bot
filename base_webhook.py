@@ -1,7 +1,7 @@
 import telepot
 from flask import Flask, request
-import os
-#from itertools import cycle
+# import os
+# from itertools import cycle
 try:
     from Queue import Queue
 except ImportError:
@@ -9,7 +9,7 @@ except ImportError:
 
 
 TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
-#HTOKEN = os.environ(TOKEN)
+# HTOKEN = os.environ(TOKEN)
 app = Flask(__name__)
 SECRET = "/bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
