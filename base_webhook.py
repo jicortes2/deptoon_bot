@@ -6,7 +6,14 @@ try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
-import sys
+import os
+ON_HEROKU = os.environ.get('ON_HEROKU')
+
+if ON_HEROKU:
+    # get the heroku port
+    PORT = int(os.environ.get('PORT', 17995))  # as per OP comments default is 17995
+else:
+    PORT = 3000
 
 """
 $ python3.5 flask_counter.py <token> <listening_port> <webhook_url>
@@ -23,12 +30,11 @@ class MessageCounter(telepot.helper.ChatHandler):
         self._count += 1
         self.sender.sendMessage(self._count)
 
-TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
+TOKEN = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
 # HTOKEN = os.environ(TOKEN)
 SECRET = "bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
 app = Flask(__name__)
-PORT = int(sys.argv[2])
 update_queue = Queue()  # channel between `app` and `bot`
 
 bot = telepot.DelegatorBot(TOKEN, [
@@ -45,7 +51,7 @@ def pass_update():
 if __name__ == '__main__':
     bot.setWebhook(URL+SECRET)
     sleep(1)
-    app.run(debug=True)
+    app.run(port=PORT, debug=True)
 """import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from flask import Flask, request
