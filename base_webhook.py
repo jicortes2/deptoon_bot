@@ -18,6 +18,7 @@ TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
 # HTOKEN = os.environ(TOKEN)
 SECRET = "/bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
+PORT = 5000
 
 
 class MessageCounter(telepot.helper.ChatHandler):
