@@ -1,4 +1,3 @@
-import sys
 from flask import Flask, request
 import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
@@ -18,7 +17,6 @@ TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
 # HTOKEN = os.environ(TOKEN)
 SECRET = "/bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
-PORT = 5000
 
 
 class MessageCounter(telepot.helper.ChatHandler):
@@ -47,7 +45,7 @@ def pass_update():
 
 if __name__ == '__main__':
     bot.setWebhook(URL)
-    app.run(port=PORT, debug=True)
+    app.run(debug=True)
 """import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from flask import Flask, request
