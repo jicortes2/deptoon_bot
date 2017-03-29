@@ -6,6 +6,7 @@ try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
+import sys
 
 """
 $ python3.5 flask_counter.py <token> <listening_port> <webhook_url>
@@ -27,6 +28,7 @@ TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
 SECRET = "bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
 app = Flask(__name__)
+PORT = int(sys.argv[2])
 update_queue = Queue()  # channel between `app` and `bot`
 
 bot = telepot.DelegatorBot(TOKEN, [
