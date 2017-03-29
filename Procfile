@@ -1,1 +1,1 @@
-'worker: python3 base_webhook.py'
+'web: python3 base_webhook.py'
