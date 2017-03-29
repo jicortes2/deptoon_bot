@@ -1,1 +1,1 @@
-worker: python base_webhook.py
+worker: python3 base_webhook.py
