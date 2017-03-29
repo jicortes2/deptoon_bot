@@ -1,38 +1,31 @@
 import telepot
 from flask import Flask, request
-from os import environ
-from itertools import cycle
+import os
+#from itertools import cycle
 try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
 
 
-BOT_TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
-TOKEN = environ(BOT_TOKEN)
+TOKEN = '318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU'
+HTOKEN = os.environ(TOKEN)
 app = Flask(__name__)
 SECRET = "/bot{}".format(TOKEN)
 URL = "https://api.telegram.org/"
 BOT = telepot.Bot(TOKEN)
 UPDATE_QUEUE = Queue()
-dawg_list = cycle([
+"""dawg_list = cycle([
                     'Dawg acuerdate de comprar las tazas',
                     'Dawg, no te ibai en marzo?',
                     'Hace cuanto no vas al supermercado dawg?',
                     'Te acuerdas donde queda el super dawg?',
                     'Dawg compra pan'
-                ])
+                ])"""
 
 
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
-    if content_type != 'text':
-        return
-    text = msg["text"]
-    if text.lower().startswith('/chaqueteardawg'):
-        answer = dawg_list
-    else:
-        answer = "Yow yow"
     BOT.sendMessage(chat_id, "{}".format(answer))
 
 
