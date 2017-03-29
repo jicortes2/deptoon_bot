@@ -1,5 +1,4 @@
 telepot
 flask
-os
 itertools
 Queue
