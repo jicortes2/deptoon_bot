@@ -35,12 +35,12 @@ dawg_list = cycle([
 def on_chat_message(msg):
     content_type, chat_type, chat_id = telepot.glance(msg)
     if content_type != 'text':
-                    return
-                text = msg["text"]
-                if text.lower().startswith('/chaqueteardawg'):
-                    answer = dawg_list
-                else:
-                    answer = "Yow yow"
+        return
+    text = msg["text"]
+    if text.lower().startswith('/chaqueteardawg'):
+        answer = dawg_list
+    else:
+        answer = "Yow yow"
     BOT.sendMessage(chat_id, "{}".format(answer))
 
 BOT.message_loop({'chat': on_chat_message}, source=UPDATE_QUEUE)
