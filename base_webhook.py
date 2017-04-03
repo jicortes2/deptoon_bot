@@ -3,21 +3,22 @@ import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from os import environ
 from time import sleep
+from random import choice
 from itertools import cycle
+from constants import dawg_list, TOKEN, URL
 try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
+
 
 """
 $ python3.5 flask_counter.py <token> <listening_port> <webhook_url>
 Webhook path is '/abc', therefore:
 <webhook_url>: https://<base>/abc
 """
-dawg_list = cycle(['Dawg acuerdate de comprar las tazas', 'Dawg, no te ibai en marzo?',
-             'Hace cuanto no vas al supermercado dawg?', 'Te acuerdas donde queda el super dawg?',
-             'Dawg compra pan'
-             ])
+
+PORT = int(environ.get("PORT", 5000))
 
 
 class MessageCounter(telepot.helper.ChatHandler):
@@ -33,15 +34,11 @@ class MessageCounter(telepot.helper.ChatHandler):
 
         text = msg['text']
         if text.lower().startswith('/chaqueteardawg'):
-            bot.sendMessage(chat_id, next(dawg_list))
+            bot.sendMessage(chat_id, choice(dawg_list))
             # self.sender.sendMessage(self._count)
         else:
             self.sender.sendMessage(self._count)
 
-TOKEN = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU" # Deptoon_bot
-# TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so" # testeo_deptoon_bot
-PORT = int(environ.get("PORT", 5000))
-URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
 
 app = Flask(__name__)
 update_queue = Queue()  # channel between `app` and `bot`
@@ -52,10 +49,12 @@ bot = telepot.DelegatorBot(TOKEN, [
 ])
 bot.message_loop(source=update_queue)  # take updates from queue
 
+
 @app.route("/{}".format(TOKEN), methods=['GET', 'POST'])
 def pass_update():
     update_queue.put(request.data)  # pass update to bot
     return 'OK'
+
 
 if __name__ == '__main__':
     bot.setWebhook()
