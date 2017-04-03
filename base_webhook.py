@@ -38,8 +38,8 @@ class MessageCounter(telepot.helper.ChatHandler):
         else:
             self.sender.sendMessage(self._count)
 
-# deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
-TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so"
+TOKEN = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU" # Deptoon_bot
+# TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so" # testeo_deptoon_bot
 PORT = int(environ.get("PORT", 5000))
 URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
 
