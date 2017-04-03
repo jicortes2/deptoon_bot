@@ -39,13 +39,24 @@ class MessageCounter(telepot.helper.ChatHandler):
         elif text.startswith("/addchaqueteo"):
             text = text.replace("/addchaqueteo", "").lstrip()
             dawg_list.append(text)
-            answer = "{} fue agregado al chaqueteo del dawg".format(text)
+            answer = "'{}' fue agregado al chaqueteo del dawg".format(text)
             bot.sendMessage(chat_id, answer)
         elif text.startswith("/listadawg"):
-            answer = "Chaqueteando al Dawg\n\n"
+            answer = "** Chaqueteando al Dawg **\n\n"
             for i in range(len(dawg_list)):
                 answer += "{}.- {}\n".format(i+1, dawg_list[i])
             bot.sendMessage(chat_id, answer)
+        elif text.startswith("/deletechaqueteo"):
+            text = text.replace("/deletechaqueteo").lstrip()
+            try:
+                answer = "'{}' fue eliminado de la lista de chaqueteo del dawg".format(dawg_list[text])
+                del dawg_list[int(text)]
+            except ValueError:
+                answer = "El valor enviado no es un indice valido, prueba llamando a /listadawg para obtener el valor que buscas"
+            except IndexError:
+                answer = "El valor enviado no pertenece a la lista de chaqueteo del dawg, prueba llamando a /listadawg para obtener el valor que buscas"
+            finally:
+                bot.sendMessage(chat_id, answer)
         else:
             pass
 
