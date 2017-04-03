@@ -23,20 +23,19 @@ PORT = int(environ.get("PORT", 5000))
 class MessageCounter(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
         super(MessageCounter, self).__init__(*args, **kwargs)
-        self._count = 0
 
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
-        self._count += 1
+
         if content_type != 'text':
             return
 
         text = msg['text']
         if text.lower().startswith('/chaqueteardawg'):
             bot.sendMessage(chat_id, choice(dawg_list))
-            # self.sender.sendMessage(self._count)
+            # self.sender.sendMessage(self._count) no sirve para grupos
         else:
-            self.sender.sendMessage(self._count)
+            pass
 
 
 app = Flask(__name__)
