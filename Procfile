@@ -1,1 +1,1 @@
-web: python base_webhook.py $PORT
+web: python base_webhook.py
