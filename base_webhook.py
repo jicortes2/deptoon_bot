@@ -4,7 +4,6 @@ from telepot.delegate import per_chat_id, create_open, pave_event_space
 from os import environ
 from time import sleep
 from random import choice
-from itertools import cycle
 from constants import dawg_list, TOKEN, URL
 try:
     from Queue import Queue
