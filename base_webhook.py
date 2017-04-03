@@ -42,7 +42,7 @@ class MessageCounter(telepot.helper.ChatHandler):
             answer = "{} fue agregado al chaqueteo del dawg".format(text)
             bot.sendMessage(chat_id, answer)
         elif text.startswith("/listadawg"):
-            answer = ""
+            answer = "Chaqueteando al Dawg\n\n"
             for i in range(len(dawg_list)):
                 answer += "{}.- {}\n".format(i+1, dawg_list[i])
             bot.sendMessage(chat_id, answer)
