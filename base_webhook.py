@@ -23,10 +23,10 @@ class MessageCounter(telepot.helper.ChatHandler):
         self._count += 1
         self.sender.sendMessage(self._count)
 
-
+#deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
 TOKEN = '361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so'
 PORT = 8000
-URL = 'https://api.telegram.org/bot{}'.format(TOKEN)
+URL = "https://stark-tor-45686.herokuapp.com/bot{}".format(TOKEN)
 
 app = Flask(__name__)
 update_queue = Queue()  # channel between `app` and `bot`
@@ -44,4 +44,4 @@ def pass_update():
 
 if __name__ == '__main__':
     bot.setWebhook(URL)
-    app.run(port=PORT, debug=True)
+    app.run(port=PORT, debug=False)
