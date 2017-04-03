@@ -2,6 +2,7 @@ from flask import Flask, request
 import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from os import environ
+from time import sleep
 try:
     from Queue import Queue
 except ImportError:
@@ -43,5 +44,7 @@ def pass_update():
     return 'OK'
 
 if __name__ == '__main__':
+    bot.setWebhook()
+    sleep(1)
     bot.setWebhook(URL)
     app.run(host="0.0.0.0", port=PORT, debug=True)
