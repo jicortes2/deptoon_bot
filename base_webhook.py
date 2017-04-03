@@ -1,4 +1,3 @@
-import sys
 from flask import Flask, request
 import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
@@ -23,8 +22,9 @@ class MessageCounter(telepot.helper.ChatHandler):
         self._count += 1
         self.sender.sendMessage(self._count)
 
-#deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
-TOKEN = '361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so'
+
+# deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
+TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so"
 PORT = 8000
 URL = "https://stark-tor-45686.herokuapp.com/{}".format(TOKEN)
 
@@ -37,11 +37,11 @@ bot = telepot.DelegatorBot(TOKEN, [
 ])
 bot.message_loop(source=update_queue)  # take updates from queue
 
-@app.route("getme", methods=['GET', 'POST'])
+@app.route("/{}".format(TOKEN), methods=['GET', 'POST'])
 def pass_update():
     update_queue.put(request.data)  # pass update to bot
     return 'OK'
 
 if __name__ == '__main__':
     bot.setWebhook(URL)
-    app.run(port=80, debug=False)
+    app.run(port=8443, debug=True)
