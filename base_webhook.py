@@ -37,7 +37,7 @@ bot = telepot.DelegatorBot(TOKEN, [
 ])
 bot.message_loop(source=update_queue)  # take updates from queue
 
-@app.route('/abc', methods=['GET', 'POST'])
+@app.route(TOKEN, methods=['GET', 'POST'])
 def pass_update():
     update_queue.put(request.data)  # pass update to bot
     return 'OK'
