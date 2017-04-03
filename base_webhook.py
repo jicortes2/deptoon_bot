@@ -31,9 +31,21 @@ class MessageCounter(telepot.helper.ChatHandler):
             return
 
         text = msg['text']
-        if text.lower().startswith('/chaqueteardawg'):
+        if text.startswith('/start'):
+            bot.sendMessage(chat_id, 'Deptoon_bot is ready to begin')
+        elif text.lower().startswith('/chaqueteardawg'):
             bot.sendMessage(chat_id, choice(dawg_list))
             # self.sender.sendMessage(self._count) no sirve para grupos
+        elif text.startswith("/addchaqueteo"):
+            text = text.replace("/addchaqueteo", "").lstrip()
+            dawg_list.append(text)
+            answer = "{} fue agregado al chaqueteo del dawg".format(text)
+            bot.sendMessage(chat_id, answer)
+        elif text.startswith("/listadawg"):
+            answer = ""
+            for i in range(len(dawg_list)):
+                answer += "{}.- {}\n".format(i+1, dawg_list[i])
+            bot.sendMessage(chat_id, answer)
         else:
             pass
 
