@@ -26,7 +26,7 @@ class MessageCounter(telepot.helper.ChatHandler):
 # deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
 TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so"
 PORT = 8000
-URL = "https://stark-tor-45686.herokuapp.com/{}".format(TOKEN)
+URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
 
 app = Flask(__name__)
 update_queue = Queue()  # channel between `app` and `bot`
