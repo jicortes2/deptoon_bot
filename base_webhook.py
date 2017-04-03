@@ -44,4 +44,4 @@ def pass_update():
 
 if __name__ == '__main__':
     bot.setWebhook(URL)
-    app.run(port=PORT, debug=False)
+    app.run(port=80, debug=False)
