@@ -3,6 +3,7 @@ import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from os import environ
 from time import sleep
+from itertools import cycle
 try:
     from Queue import Queue
 except ImportError:
@@ -13,6 +14,11 @@ $ python3.5 flask_counter.py <token> <listening_port> <webhook_url>
 Webhook path is '/abc', therefore:
 <webhook_url>: https://<base>/abc
 """
+dawg_list = cycle(['Dawg acuerdate de comprar las tazas', 'Dawg, no te ibai en marzo?',
+             'Hace cuanto no vas al supermercado dawg?', 'Te acuerdas donde queda el super dawg?',
+             'Dawg compra pan'
+             ])
+
 
 class MessageCounter(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
@@ -20,9 +26,17 @@ class MessageCounter(telepot.helper.ChatHandler):
         self._count = 0
 
     def on_chat_message(self, msg):
+        content_type, chat_type, chat_id = telepot.glance(msg)
         self._count += 1
-        self.sender.sendMessage(self._count)
+        if content_type != 'text':
+            return
 
+        text = msg['text']
+        if text.lower().startswith('/chaqueteardawg'):
+            bot.sendMessage(chat_id, next(dawg_list))
+            # self.sender.sendMessage(self._count)
+        else:
+            self.sender.sendMessage(self._count)
 
 # deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
 TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so"
