@@ -1,2 +1,1 @@
-heroku ps:scale web=1
-web: python base_webhook.py
+web: python base_webhook.py $PORT

@@ -1,7 +1,7 @@
 from flask import Flask, request
 import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
-
+from os import environ
 try:
     from Queue import Queue
 except ImportError:
@@ -25,7 +25,7 @@ class MessageCounter(telepot.helper.ChatHandler):
 
 # deptoon_bot = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"
 TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so"
-PORT = 8000
+PORT = int(environ.get("PORT", 5000))
 URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
 
 app = Flask(__name__)
@@ -44,4 +44,4 @@ def pass_update():
 
 if __name__ == '__main__':
     bot.setWebhook(URL)
-    app.run(port=8443, debug=True)
+    app.run(host="0.0.0.0", port=PORT, debug=True)
