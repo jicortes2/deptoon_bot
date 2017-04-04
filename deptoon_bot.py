@@ -24,26 +24,26 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = "Yow yow aqui deptoon_bot listo para zorronear"
 
         elif text.lower().startswith('/chaqueteardawg'):
-            with open("dawg_list.txt") as file:
+            with open("db/dawg_list.txt") as file:
                 datos = file.readlines()
             answer = choice(datos)
 
         elif text.startswith("/addchaqueteo"):
             text = text.replace("/addchaqueteo", "").lstrip()
-            with open("dawg_list.txt", "a") as file:
+            with open("db/dawg_list.txt", "a") as file:
                 file.write("{}\n".format(text))
             answer = "'{}' fue agregado al chaqueteo del dawg".format(text)
 
         elif text.startswith("/listadawg"):
             answer = "** Chaqueteando al Dawg **\n\n"
-            with open("dawg_list.txt") as file:
+            with open("db/dawg_list.txt") as file:
                 dawg_list = file.readlines()
                 for i, phrase in enumerate(dawg_list):
                     answer += "{}.- {}\n".format(i+1, phrase)
 
         elif text.startswith("/deletechaqueteo"):
             try:
-                with open("dawg_list.txt") as file:
+                with open("db/dawg_list.txt") as file:
                     facts = file.readlines()
 
                 text = int(text.replace("/deletechaqueteo", "").lstrip())
@@ -55,7 +55,7 @@ class Deptoon(telepot.helper.ChatHandler):
                     answer = "'{}' fue eliminado de la lista de chaqueteo del dawg".format(
                         facts[text - 1])
                     del facts[text - 1]
-                with open("dawg_list.txt", "w") as file:
+                with open("db/dawg_list.txt", "w") as file:
                     for dato in facts:
                         file.write("{}\n".format(dato))
 
