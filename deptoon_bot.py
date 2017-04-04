@@ -62,7 +62,7 @@ class Deptoon(telepot.helper.ChatHandler):
     def add_products(self, command):
         """ Agrega productos al carrito de supermercado """
         products = command.replace("/add", "").lstrip().split(',')
-        if len(products) == 0:
+        if len(products[0]) == 0:
             return "Debes ingresar los productos asi: /add prod1, prod2, ..."
         else:
             with open("db/shop.txt", 'a') as f:
