@@ -48,7 +48,7 @@ class MessageCounter(telepot.helper.ChatHandler):
             answer = "** Chaqueteando al Dawg **\n\n"
             for i, phrase in enumerate(dawg_list):
                 answer += "{}.- {}\n".format(i+1, phrase)
-            bot.sendMessage(chat_id, answer, parse_mode="markdown")
+            bot.sendMessage(chat_id, answer, parse_mode="Markdown")
 
         elif text.startswith("/deletechaqueteo"):
             text = text.replace("/deletechaqueteo", "").lstrip()
@@ -61,9 +61,6 @@ class MessageCounter(telepot.helper.ChatHandler):
                 answer = "El valor enviado no pertenece a la lista de chaqueteo del dawg, prueba llamando a /listadawg para obtener el valor que buscas"
             finally:
                 bot.sendMessage(chat_id, answer)
-
-        else:
-            pass
 
 
 app = Flask(__name__)
