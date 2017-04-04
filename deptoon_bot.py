@@ -43,11 +43,11 @@ class Deptoon(telepot.helper.ChatHandler):
             text = int(command.replace("/deletechaqueteo", "").lstrip())
             if int(text) < 0:
                 answer = "'{}' fue eliminado de la lista de chaqueteo del dawg".format(
-                    facts[text])
+                    facts[text].replace('\n', ''))
                 del facts[text]
             else:
                 answer = "'{}' fue eliminado de la lista de chaqueteo del dawg".format(
-                    facts[text - 1])
+                    facts[text - 1].replace('\n', ''))
                 del facts[text - 1]
             with open("db/dawg_list.txt", "w") as file:
                 for dato in facts:
