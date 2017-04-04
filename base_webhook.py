@@ -48,7 +48,7 @@ class MessageCounter(telepot.helper.ChatHandler):
             answer = "Chaqueteando al Dawg\n\n"
             for i, phrase in enumerate(dawg_list):
                 answer += "{}.- {}\n".format(i+1, phrase)
-            bot.sendMessage(chat_id, answer)
+            bot.sendMessage(chat_id, answer, parse_mode="markdown")
 
         elif text.startswith("/deletechaqueteo"):
             text = text.replace("/deletechaqueteo", "").lstrip()
