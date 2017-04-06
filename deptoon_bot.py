@@ -102,8 +102,7 @@ class Deptoon(telepot.helper.ChatHandler):
         elif user_id == 253564139:  # Cati
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
         else:
-            BOT.sendMessage(chat_id, "No tienes yow yow sticker :(")
-            return
+            id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
         BOT.sendSticker(chat_id, sticker=id_sticker)
 
     def on_chat_message(self, msg):
@@ -141,7 +140,7 @@ class Deptoon(telepot.helper.ChatHandler):
         elif text.startswith("/getid"):
             answer = "Mensaje enviado por {}".format(str(user_id))
 
-        elif "yow yow" in text:
+        elif text.startswith("/yowyow"):
             answer = self.yow_yow(user_id, chat_id)
             return
 
