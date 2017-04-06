@@ -102,9 +102,6 @@ class Deptoon(telepot.helper.ChatHandler):
         if text.startswith('/start'):
             answer = "Yow yow aqui deptoon_bot listo para zorronear"
 
-        elif msg["from"]["user_id"] == 255008894:
-            answer = "yeeei funciona"
-
         elif text.lower().startswith('/chaqueteardawg'):
             answer = self.get_phrase()
 
