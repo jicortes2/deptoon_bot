@@ -5,6 +5,8 @@ import urlparse
 
 
 def access(option=True):
+    """ Returns connection to deptoon database (except when you're
+    creating it, on that case returns heroku main database) """
     urlparse.uses_netloc.append("postgres")
     url = urlparse.urlparse(os.environ["DATABASE_URL"])
     db = 'deptoon_bot' if option else url.path[1:]
@@ -18,6 +20,8 @@ def access(option=True):
 
 
 def check_db():
+    """ Check if deptoon_bot database exists, if it doesn't it is created
+    with the necessary tables """
     conn = access(option=False)
     cur = conn.cursor()
     cur.execute("SELECT 1 from pg_database WHERE datname='deptoon_bot'")
@@ -41,6 +45,7 @@ def check_db():
 
 
 def add_element(table, chat_id, thing):
+    """ Returns true if the thing is added to the table """
     try:
         conn = access()
         cur = conn.cursor()
@@ -53,6 +58,7 @@ def add_element(table, chat_id, thing):
 
 
 def get_elements(table):
+    """ Returns the a list with all the elements """
     conn = access()
     cur = conn.cursor()
     cur.execute("SELECT * FROM {}".format(table))
@@ -62,6 +68,7 @@ def get_elements(table):
 
 
 def clear_table(table, chat_id):
+    """ Delete all the elements of the table related to one chat """
     conn = access()
     cur = conn.cursor()
     cur.execute("DELETE FROM {} WHERE chat = {}".format(table, chat_id))
