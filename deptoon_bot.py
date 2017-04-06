@@ -12,7 +12,7 @@ except ImportError:
     253564139 - Cati
 
     STICKERS
-    DAWG = CAADAQADBgADDNuWDKuOezm3e36nAg"""
+    DAWG = """
 
 
 class Deptoon(telepot.helper.ChatHandler):
@@ -101,6 +101,8 @@ class Deptoon(telepot.helper.ChatHandler):
             id_sticker = "CAADAQADCAADDNuWDHREnLw8FWs0Ag"
         elif user_id == 253564139:  # Cati
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
+        elif user_id == 135558671:
+            id_sticker = "CAADAQADBgADDNuWDKuOezm3e36nAg"
         else:
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
         BOT.sendSticker(chat_id, sticker=id_sticker)
