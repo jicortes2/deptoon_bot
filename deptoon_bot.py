@@ -100,6 +100,8 @@ class Deptoon(telepot.helper.ChatHandler):
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
         """elif user_id == dawg:
             id_sticker = CAADAQADBgADDNuWDKuOezm3e36nAg"""
+        else:
+            BOT.sendMessage(chat_id, "No tienes yow yow sticker :(")
         BOT.sendSticker(chat_id, sticker=id_sticker)
 
     def on_chat_message(self, msg):
