@@ -100,11 +100,10 @@ class Deptoon(telepot.helper.ChatHandler):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
 
-        if content_type == "text":
-            pass
-        elif content_type == "sticker":
+        if content_type == "sticker":
             sticker_id = msg["sticker"]["file_id"]
-            BOT.sendMessage(chat_id, "Sticker {}".format(str(sticker_id)))
+            BOT.sendMessage(chat_id, "Sticker {}".format(sticker_id))
+            return
 
         text = msg['text']
         answer = ""
