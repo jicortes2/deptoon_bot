@@ -92,17 +92,20 @@ class Deptoon(telepot.helper.ChatHandler):
         return products
 
     def yow_yow(self, user_id):
-
-        pass
+        if user_id == 255008894:  # Cristian
+            id_sticker = "CAADAQADDAADDNuWDOx7HiPygX7BAg"
+        elif user_id == 211213068:  # Juan
+            id_sticker = "CAADAQADCAADDNuWDHREnLw8FWs0Ag"
+        elif user_id == 253564139:  # Cati
+            id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
+        """elif user_id == dawg:
+            id_sticker = CAADAQADBgADDNuWDKuOezm3e36nAg"""
         BOT.sendSticker(chat_id, sticker=id_sticker)
 
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
-        BOT.sendMessage(chat_id, "Mensaje del tipo {}".format(content_type))
-        if content_type == "sticker":
-            sticker_id = msg["sticker"]["file_id"]
-            BOT.sendMessage(chat_id, "Sticker {}".format(sticker_id))
+        if content_type != "text":
             return
 
         text = msg['text']
@@ -135,7 +138,8 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = "Mensaje enviado por {}".format(str(user_id))
 
         elif text.startswith("yow yow"):
-            answer = self.yow_yow(user_id)
+            self.yow_yow(user_id)
+            return
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
 
