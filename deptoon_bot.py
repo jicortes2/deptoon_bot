@@ -9,7 +9,10 @@ except ImportError:
 
 """ 255008894 - Cristian
     211213068 - Juan
-    253564139 - Cati """
+    253564139 - Cati
+
+    STICKERS
+    DAWG = CAADAQADBgADDNuWDKuOezm3e36nAg"""
 
 
 class Deptoon(telepot.helper.ChatHandler):
@@ -91,15 +94,13 @@ class Deptoon(telepot.helper.ChatHandler):
                 products += "- {}".format(prod)
         return products
 
-    def yow_yow(self, user_id):
+    def yow_yow(self, user_id, chat_id):
         if user_id == 255008894:  # Cristian
             id_sticker = "CAADAQADDAADDNuWDOx7HiPygX7BAg"
         elif user_id == 211213068:  # Juan
             id_sticker = "CAADAQADCAADDNuWDHREnLw8FWs0Ag"
         elif user_id == 253564139:  # Cati
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
-        """elif user_id == dawg:
-            id_sticker = CAADAQADBgADDNuWDKuOezm3e36nAg"""
         else:
             BOT.sendMessage(chat_id, "No tienes yow yow sticker :(")
         BOT.sendSticker(chat_id, sticker=id_sticker)
@@ -140,7 +141,7 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = "Mensaje enviado por {}".format(str(user_id))
 
         elif text.startswith("yow yow"):
-            self.yow_yow(user_id)
+            self.yow_yow(user_id, chat_id)
             return
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
