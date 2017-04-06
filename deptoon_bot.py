@@ -7,6 +7,10 @@ try:
 except ImportError:
     from queue import Queue
 
+""" 255008894 - Cristian
+    211213068 - Juan
+    253564139 - Cati """
+
 
 class Deptoon(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
@@ -87,16 +91,20 @@ class Deptoon(telepot.helper.ChatHandler):
                 products += "- {}".format(prod)
         return products
 
-    def get_user(self, id):
-        """ Retorna el id del remitente """
-        return "Mensaje enviado por {}".format(str(id))
+    def yow_yow(self, user_id):
+
+        pass
+        BOT.sendSticker(chat_id, sticker=id_sticker)
 
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
 
-        if content_type != 'text':
-            return
+        if content_type == "text":
+            pass
+        elif content_type == "sticker":
+            sticker_id = msg["sticker"]["file_id"]
+            BOT.sendMessage(chat_id, "Sticker {}".format(str(sticker_id)))
 
         text = msg['text']
         answer = ""
@@ -125,7 +133,10 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = self.supermarket_list()
 
         elif text.startswith("/getid"):
-            answer = self.get_user(user_id)
+            answer = "Mensaje enviado por {}".format(str(user_id))
+
+        elif text == "yow yow":
+            answer = self.yow_yow(user_id)
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
 
