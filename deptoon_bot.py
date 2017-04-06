@@ -87,8 +87,13 @@ class Deptoon(telepot.helper.ChatHandler):
                 products += "- {}".format(prod)
         return products
 
+    def get_user(self, id):
+        """ Retorna el id del remitente """
+        return "Mensaje enviado por {}".format(str(id))
+
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
+        user_id = msg["from"]
 
         if content_type != 'text':
             return
@@ -118,6 +123,9 @@ class Deptoon(telepot.helper.ChatHandler):
 
         elif text.startswith("/supermercado"):
             answer = self.supermarket_list()
+
+        elif text.startswith("/getid"):
+            answer = self.get_user(user_id)
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
 
