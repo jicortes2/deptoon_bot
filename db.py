@@ -1,9 +1,24 @@
 from psycopg2 import connect, IntegrityError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
+import os
+import urlparse
+
+
+def access(option=True):
+    urlparse.uses_netloc.append("postgres")
+    url = urlparse.urlparse(os.environ["DATABASE_URL"])
+    db = 'deptoon_bot' if option else url.path[1:]
+    return connect(
+                    dbname=db,
+                    user=url.username,
+                    password=url.password,
+                    host=url.hostname,
+                    port=url.port
+                )
 
 
 def check_db():
-    conn = connect(dbname="postgres", password='juan5826', host='localhost')
+    conn = access(option=False)
     cur = conn.cursor()
     cur.execute("SELECT 1 from pg_database WHERE datname='deptoon_bot'")
     tupla = cur.fetchone()
@@ -15,7 +30,7 @@ def check_db():
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur.execute("CREATE DATABASE deptoon_bot")
         conn.close()
-        conn = connect(dbname="deptoon_bot", password="juan5826")
+        conn = access()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur = conn.cursor()
         tables = ['dawg_list', 'shop']
@@ -27,7 +42,7 @@ def check_db():
 
 def add_element(table, chat_id, thing):
     try:
-        conn = connect(dbname="deptoon_bot", password='juan5826')
+        conn = access()
         cur = conn.cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur.execute("INSERT INTO {} (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
@@ -38,7 +53,7 @@ def add_element(table, chat_id, thing):
 
 
 def get_elements(table):
-    conn = connect(dbname="deptoon_bot", password='juan5826')
+    conn = access()
     cur = conn.cursor()
     cur.execute("SELECT * FROM {}".format(table))
     tuples = cur.fetchall()
@@ -46,15 +61,11 @@ def get_elements(table):
     return [i[1] for i in tuples]
 
 
-
 def clear_table(table, chat_id):
-    conn = connect(dbname="postgres", password='juan5826')
+    conn = access()
     cur = conn.cursor()
     cur.execute("DELETE FROM {} WHERE chat = {}".format(table, chat_id))
     conn.close()
 
 
 check_db()
-for i, el in enumerate(['a','safdsa', 'sdfasdf']):
-    add_element('dawg_list', i, el)
-print(get_elements('dawg_list'))
