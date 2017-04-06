@@ -93,6 +93,7 @@ class Deptoon(telepot.helper.ChatHandler):
 
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
+        user_id = msg["from"]["id"]
 
         if content_type != 'text':
             return
@@ -124,7 +125,7 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = self.supermarket_list()
 
         elif text.startswith("/getid"):
-            answer = self.get_user(chat_id)
+            answer = self.get_user(user_id)
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
 
