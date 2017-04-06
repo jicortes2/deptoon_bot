@@ -10,9 +10,7 @@ except ImportError:
 """ 255008894 - Cristian
     211213068 - Juan
     253564139 - Cati
-
-    STICKERS
-    DAWG = """
+    135558671 - Dawg """
 
 
 class Deptoon(telepot.helper.ChatHandler):
@@ -95,13 +93,14 @@ class Deptoon(telepot.helper.ChatHandler):
         return products
 
     def yow_yow(self, user_id, chat_id):
+        """ Send yow yow sticker depending of the user """
         if user_id == 255008894:  # Cristian
             id_sticker = "CAADAQADDAADDNuWDOx7HiPygX7BAg"
         elif user_id == 211213068:  # Juan
             id_sticker = "CAADAQADCAADDNuWDHREnLw8FWs0Ag"
         elif user_id == 253564139:  # Cati
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
-        elif user_id == 135558671:
+        elif user_id == 135558671:  # Dawg
             id_sticker = "CAADAQADBgADDNuWDKuOezm3e36nAg"
         else:
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
