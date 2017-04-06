@@ -111,6 +111,10 @@ class Deptoon(telepot.helper.ChatHandler):
         if content_type != "text":
             return
 
+        if content_type == "text":
+            BOT.sendMessage(chat_id, msg["text"])
+
+
         text = msg['text']
         answer = ""
         if text.startswith('/start'):
