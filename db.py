@@ -13,7 +13,7 @@ def access(option=True):
     creating it, on that case returns heroku main database) """
     urlparse.uses_netloc.append("postgres")
     url = urlparse.urlparse(os.environ[DATABASE_URL])
-    db = 'deptoon_bot' if option else url.path[1:]
+    db = url.path[1:]
     return connect(
                     dbname=db,
                     user=url.username,
@@ -79,4 +79,4 @@ def clear_table(table, chat_id):
     conn.close()
 
 
-check_db()
+# check_db()
