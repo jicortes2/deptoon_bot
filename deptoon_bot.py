@@ -27,14 +27,14 @@ class Deptoon(telepot.helper.ChatHandler):
     def get_phrases(self, chat_id):
         """ Listado de frases para molestar al dawg """
         result = "** Chaqueteando al Dawg **\n\n"
-        phrases = db.get_elements('dawg_table', chat_id)
+        phrases = db.get_elements('dawg_list', chat_id)
         for i, phrase in enumerate(phrases):
             result += "{}.- {}".format(i+1, phrase)
         return result
 
     def get_phrase(self, chat_id):
         """ Retorna una frase para molestar al dawg """
-        datos = db.get_elements('dawg_table', chat_id)
+        datos = db.get_elements('dawg_list', chat_id)
         return choice(datos)
 
     def delete_phrase(self, command):
