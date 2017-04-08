@@ -1,4 +1,5 @@
 import telepot
+import db
 from random import choice
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from constants import TOKEN
@@ -17,80 +18,54 @@ class Deptoon(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
         super(Deptoon, self).__init__(*args, **kwargs)
 
-    def new_phrase(self, command):
+    def new_phrase(self, command, chat_id):
         """ Agrega una frase para chaquetear al dawg """
-        command = command.replace("/addchaqueteo", "").lstrip()
-        with open("db/dawg_list.txt", "a") as file:
-            file.write("{}\n".format(command))
-        return "'{}' fue agregado al chaqueteo del dawg".format(command)
+        new_phrase = command.replace("/addchaqueteo", "").lstrip()
+        db.add_element('dawg_list', chat_id, new_phrase)
+        return "'{}' fue agregado al chaqueteo del dawg".format(new_phrase)
 
-    def get_phrases(self):
+    def get_phrases(self, chat_id):
         """ Listado de frases para molestar al dawg """
-        phrases = "** Chaqueteando al Dawg **\n\n"
-        with open("db/dawg_list.txt") as file:
-            dawg_list = file.readlines()
-            for i, phrase in enumerate(dawg_list):
-                phrases += "{}.- {}".format(i+1, phrase)
-        return phrases
+        result = "** Chaqueteando al Dawg **\n\n"
+        phrases = db.get_elements('dawg_table', chat_id)
+        for i, phrase in enumerate(phrases):
+            result += "{}.- {}".format(i+1, phrase)
+        return result
 
-    def get_phrase(self):
+    def get_phrase(self, chat_id):
         """ Retorna una frase para molestar al dawg """
-        with open("db/dawg_list.txt", "r") as f:
-            datos = f.readlines()
+        datos = db.get_elements('dawg_table', chat_id)
         return choice(datos)
 
     def delete_phrase(self, command):
         """ Elimina una frase del listado para chaquetear al dawg """
-        try:
-            with open("db/dawg_list.txt") as file:
-                facts = file.readlines()
+        pass
 
-            text = int(command.replace("/deletechaqueteo", "").lstrip())
-            if int(text) < 0:
-                answer = "'{}' fue eliminado de la lista de chaqueteo del dawg".format(
-                    facts[text].replace('\n', ''))
-                del facts[text]
-            else:
-                answer = "'{}' fue eliminado de la lista de chaqueteo del dawg".format(
-                    facts[text - 1].replace('\n', ''))
-                del facts[text - 1]
-            with open("db/dawg_list.txt", "w") as file:
-                for dato in facts:
-                    file.write("{}".format(dato))
-            return answer
-
-        except ValueError:
-            answer = "El valor enviado no es un indice valido, prueba llamando a /listadawg para obtener el valor que buscas"
-        except IndexError:
-            answer = "El valor enviado no pertenece a la lista de chaqueteo del dawg, prueba llamando a /listadawg para obtener el valor que buscas"
-
-    def add_products(self, command):
+    def add_products(self, command, chat_id):
         """ Agrega productos al carrito de supermercado """
         products = command.replace("/add", "").lstrip().split(',')
         if len(products[0]) == 0:
             return "Debes ingresar los productos asi: /add prod1, prod2, ..."
         else:
-            with open("db/shop.txt", 'a') as f:
-                for prod in products:
-                    f.write("{}\n".format(prod.lstrip()))
+            for product in products:
+                db.add_element('shop', chat_id, product)
             if len(products) == 1:
                 return "Se agregó 1 producto al carrito"
             else:
                 return "Se agregaron {} productos al carrito".format(len(products))
 
-    def clear_supermarket(self):
+    def clear_supermarket(self, chat_id):
         """ Vacia el carrito de supermercado """
-        with open("db/shop.txt", 'w'):
-            pass
+        db.clear_table('shop', chat_id)
         return "Gracias por su compra, espero que no hayas olvidado nada!"
 
-    def supermarket_list(self):
+    def supermarket_list(self, chat_id):
         """ Listado de elementos en el carrito """
-        products = "CARRITO DE SUPERMERCADO\n\n"
-        with open("db/shop.txt", 'r') as f:
-            for prod in f:
-                products += "- {}".format(prod)
-        return products
+        result = "CARRITO DE SUPERMERCADO\n\n"
+        products = db.get_elements('shop', chat_id)
+        for prod in products:
+            result += "- {}\n".format(prod)
+        return result
 
     def yow_yow(self, user_id, chat_id):
         """ Send yow yow sticker depending of the user """
@@ -118,25 +93,25 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = "Yow yow aqui deptoon_bot listo para zorronear"
 
         elif text.lower().startswith('/chaqueteardawg'):
-            answer = self.get_phrase()
+            answer = self.get_phrase(chat_id)
 
         elif text.startswith("/addchaqueteo"):
-            answer = self.new_phrase(text)
+            answer = self.new_phrase(text, chat_id)
 
         elif text.startswith("/listadawg"):
-            answer = self.get_phrases()
-
+            answer = self.get_phrases(chat_id)
+        # TODO: create db delete tuple
         elif text.startswith("/deletechaqueteo"):
             answer = self.delete_phrase(text)
 
         elif text.startswith("/add"):
-            answer = self.add_products(text)
+            answer = self.add_products(text, chat_id)
 
         elif text.startswith("/clear"):
-            answer = self.clear_supermarket()
+            answer = self.clear_supermarket(chat_id)
 
         elif text.startswith("/supermercado"):
-            answer = self.supermarket_list()
+            answer = self.supermarket_list(chat_id)
 
         elif text.startswith("/getid"):
             answer = "Mensaje enviado por {}".format(str(user_id))
