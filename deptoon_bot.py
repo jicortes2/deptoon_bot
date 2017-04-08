@@ -108,7 +108,7 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = self.get_phrases(chat_id)
         # TODO: create db delete tuple
         elif text.startswith("/deletechaqueteo"):
-            answer = self.delete_phrase(text)
+            answer = self.delete_phrase(text, chat_id)
 
         elif text.startswith("/add"):
             answer = self.add_products(text, chat_id)
