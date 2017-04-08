@@ -2,7 +2,7 @@ import telepot
 import db
 from random import choice
 from telepot.delegate import per_chat_id, create_open, pave_event_space
-from constants import TOKEN
+from constants import TOKEN, deptoon_user
 try:
     from Queue import Queue
 except ImportError:
@@ -13,9 +13,13 @@ class Deptoon(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
         super(Deptoon, self).__init__(*args, **kwargs)
 
-    def new_phrase(self, command, chat_id):
+    def new_phrase(self, command, chat_id, user_id):
         """ Agrega una frase para chaquetear al dawg """
         new_phrase = command.replace("/addchaqueteo", "").lstrip()
+        if new_phrase == "" or new_phrase == "@deptoon_bot":
+            return "No puedes agregar '{}' al chaqueteo del dawg"
+        elif user_id == deptoon_user["dawg"]:
+            return "Sorry dawg, no puedes autochaquetearte"
         db.add_element('dawg_list', chat_id, new_phrase)
         return "'{}' fue agregado al chaqueteo del dawg".format(new_phrase)
 
@@ -70,13 +74,13 @@ class Deptoon(telepot.helper.ChatHandler):
 
     def yow_yow(self, user_id, chat_id):
         """ Send yow yow sticker depending of the user """
-        if user_id == 255008894:  # Cristian
+        if user_id == deptoon_user["cris"]:  # Cristian
             id_sticker = "CAADAQADDAADDNuWDOx7HiPygX7BAg"
-        elif user_id == 211213068:  # Juan
+        elif user_id == deptoon_user["juan"]:  # Juan
             id_sticker = "CAADAQADCAADDNuWDHREnLw8FWs0Ag"
-        elif user_id == 253564139:  # Cati
+        elif user_id == deptoon_user["cati"]:  # Cati
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
-        elif user_id == 135558671:  # Dawg
+        elif user_id == deptoon_user["dawg"]:  # Dawg
             id_sticker = "CAADAQADBgADDNuWDKuOezm3e36nAg"
         else:
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
@@ -97,7 +101,7 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = self.get_phrase(chat_id)
 
         elif text.startswith("/addchaqueteo"):
-            answer = self.new_phrase(text, chat_id)
+            answer = self.new_phrase(text, chat_id, user_id)
 
         elif text.startswith("/listadawg"):
             answer = self.get_phrases(chat_id)

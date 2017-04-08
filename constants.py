@@ -2,11 +2,11 @@
 # TOKEN = "361066388:AAH-TSjo2oz1XzDMCcRz_bRfW4KHej-M3so" # testeo_deptoon_bot
 TOKEN = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"  # Deptoon_bot
 
-""" USER ID
-	255008894 - Cristian
-    211213068 - Juan
-    253564139 - Cati
-    135558671 - Dawg """
+deptoon_user = {
+	"cris": 255008894,
+    "juan": 211213068,
+    "cati": 253564139,
+    "dawg": 135558671} 
 
 # URL = "https://deptoon.herokuapp.com/{}".format(TOKEN)
 URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
