@@ -8,11 +8,6 @@ try:
 except ImportError:
     from queue import Queue
 
-""" 255008894 - Cristian
-    211213068 - Juan
-    253564139 - Cati
-    135558671 - Dawg """
-
 
 class Deptoon(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
@@ -29,7 +24,7 @@ class Deptoon(telepot.helper.ChatHandler):
         result = "** Chaqueteando al Dawg **\n\n"
         phrases = db.get_elements('dawg_list', chat_id)
         for i, phrase in enumerate(phrases):
-            result += "{}.- {}".format(i+1, phrase)
+            result += "{}.- {}\n".format(i+1, phrase)
         return result
 
     def get_phrase(self, chat_id):
