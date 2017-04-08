@@ -2,6 +2,7 @@ from psycopg2 import connect, IntegrityError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import os
 import urllib.parse as urlparse
+from constants import DATABASE_URL
 
 """ table1 = dawg_list (chat int, phrase str)
     table2 = shop (chat int, phrase str) """
@@ -11,7 +12,7 @@ def access(option=True):
     """ Returns connection to deptoon database (except when you're
     creating it, on that case returns heroku main database) """
     urlparse.uses_netloc.append("postgres")
-    url = urlparse.urlparse(os.environ["DATABASE_URL"])
+    url = urlparse.urlparse(os.environ[DATABASE_URL])
     db = 'deptoon_bot' if option else url.path[1:]
     return connect(
                     dbname=db,
