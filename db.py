@@ -40,7 +40,7 @@ def get_elements(table, chat_id):
     """ Returns the a list with all the elements """
     conn = access()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM {} WHERE chat = {}".format(table, chat_id))
+    cur.execute("SELECT * FROM '{}' WHERE chat = {}".format(table, chat_id))
     tuples = cur.fetchall()
     conn.close()
     return [i[1] for i in tuples]
