@@ -8,7 +8,7 @@ from constants import DB_NAME, DB_HOST, DB_PASS, DB_PORT, DB_USER
     table2 = shop (chat int, element str) """
 
 
-def access(option=True):
+def _access(option=True):
     """ Returns connection to deptoon database (except when you're
     creating it, on that case returns heroku main database) """
     # urlparse.uses_netloc.append("postgres")
@@ -26,7 +26,7 @@ def access(option=True):
 def add_element(table, chat_id, thing):
     """ Returns true if the thing is added to the table """
     try:
-        conn = access()
+        conn = _access()
         cur = conn.cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
         cur.execute("INSERT INTO {} (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
@@ -38,7 +38,7 @@ def add_element(table, chat_id, thing):
 
 def get_elements(table, chat_id):
     """ Returns the a list with all the elements """
-    conn = access()
+    conn = _access()
     cur = conn.cursor()
     cur.execute("SELECT * FROM {} WHERE chat = {}".format(table, chat_id))
     tuples = cur.fetchall()
@@ -46,9 +46,18 @@ def get_elements(table, chat_id):
     return [i[1] for i in tuples]
 
 
+def delete_tuple(table, chat_id, element):
+    """ Delete specific element of the table related to one chat """
+    conn = _access()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
+    cur = conn.cursor()
+    cur.execute("DELETE FROM {} WHERE chat = {} AND element = {}".format(table, chat_id, element))
+    conn.close()
+
+
 def clear_table(table, chat_id):
     """ Delete all the elements of the table related to one chat """
-    conn = access()
+    conn = _access()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
     cur.execute("DELETE FROM {} WHERE chat = {}".format(table, chat_id))

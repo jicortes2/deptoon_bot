@@ -37,9 +37,15 @@ class Deptoon(telepot.helper.ChatHandler):
         datos = db.get_elements('dawg_list', chat_id)
         return choice(datos)
 
-    def delete_phrase(self, command):
+    def delete_phrase(self, command, chat_id):
         """ Elimina una frase del listado para chaquetear al dawg """
-        pass
+        index = command.replace("/deletechaqueteo", "").lstrip().split(',')
+        phrases = db.get_elements('dawg_list', chat_id)
+        for i, phrase in enumerate(phrases):
+            if str(i) == index:
+                db.delete_tuple('dawg_list', chat_id, phrase)
+                return "{} - fue eliminada".format(phrase)
+        return "No se encontro la frase"
 
     def add_products(self, command, chat_id):
         """ Agrega productos al carrito de supermercado """
