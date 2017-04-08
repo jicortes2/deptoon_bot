@@ -49,6 +49,7 @@ def get_elements(table, chat_id):
 def clear_table(table, chat_id):
     """ Delete all the elements of the table related to one chat """
     conn = access()
+    conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
     cur.execute("DELETE FROM {} WHERE chat = {}".format(table, chat_id))
     conn.close()
