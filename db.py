@@ -43,8 +43,7 @@ def check_db():
         cur = conn.cursor()
         tables = ['dawg_list', 'shop']
         for table in tables:
-            print("CREATE TABLE {} (chat int,phrase varchar(200) PRIMARY KEY)".format(table))
-            cur.execute("CREATE TABLE {} (chat int, element varchar(200) PRIMARY KEY)".format(table))
+            cur.execute("CREATE TABLE {} (chat int, phrase varchar(200) PRIMARY KEY)".format(table))
         conn.close()
 
 
@@ -54,7 +53,7 @@ def add_element(table, chat_id, thing):
         conn = access()
         cur = conn.cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur.execute("INSERT INTO {} (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
+        cur.execute("INSERT INTO {} (chat, phrase) VALUES ({}, '{}')".format(table, chat_id, thing))
         conn.close()
         return True
     except IntegrityError:
