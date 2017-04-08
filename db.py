@@ -4,8 +4,8 @@ import os
 import urllib.parse as urlparse
 from constants import DB_NAME, DB_HOST, DB_PASS, DB_PORT, DB_USER
 
-""" table1 = dawg_list (chat int, phrase str)
-    table2 = shop (chat int, phrase str) """
+""" table1 = dawg_list (chat int, element str)
+    table2 = shop (chat int, element str) """
 
 
 def access(option=True):
@@ -23,37 +23,13 @@ def access(option=True):
                 )
 
 
-def check_db():
-    """ Check if deptoon_bot database exists, if it doesn't it is created
-    with the necessary tables """
-    conn = access(option=False)
-    cur = conn.cursor()
-    cur.execute("SELECT 1 from pg_database WHERE datname='deptoon_bot'")
-    tupla = cur.fetchone()
-    try:
-        if tupla[0]:
-            conn.close()
-            print('Ya existe la DB, puedes continuar sin problemas')
-    except TypeError:
-        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur.execute("CREATE DATABASE deptoon_bot")
-        conn.close()
-        conn = access()
-        conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur = conn.cursor()
-        tables = ['dawg_list', 'shop']
-        for table in tables:
-            cur.execute("CREATE TABLE {} (chat int, phrase varchar(200) PRIMARY KEY)".format(table))
-        conn.close()
-
-
 def add_element(table, chat_id, thing):
     """ Returns true if the thing is added to the table """
     try:
         conn = access()
         cur = conn.cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur.execute("INSERT INTO {} (chat, phrase) VALUES ({}, '{}')".format(table, chat_id, thing))
+        cur.execute("INSERT INTO '{}' (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
         conn.close()
         return True
     except IntegrityError:
