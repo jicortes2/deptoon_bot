@@ -29,7 +29,7 @@ def add_element(table, chat_id, thing):
         conn = access()
         cur = conn.cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        cur.execute("INSERT INTO '{}' (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
+        cur.execute("INSERT INTO {} (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
         conn.close()
         return True
     except IntegrityError:
@@ -40,7 +40,7 @@ def get_elements(table, chat_id):
     """ Returns the a list with all the elements """
     conn = access()
     cur = conn.cursor()
-    cur.execute("SELECT * FROM '{}' WHERE chat = {}".format(table, chat_id))
+    cur.execute("SELECT * FROM {} WHERE chat = {}".format(table, chat_id))
     tuples = cur.fetchall()
     conn.close()
     return [i[1] for i in tuples]
