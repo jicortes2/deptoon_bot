@@ -2,7 +2,7 @@ from psycopg2 import connect, IntegrityError
 from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 import os
 import urllib.parse as urlparse
-from constants import DATABASE_URL
+from constants import URL as DATABASE_URL
 
 """ table1 = dawg_list (chat int, phrase str)
     table2 = shop (chat int, phrase str) """

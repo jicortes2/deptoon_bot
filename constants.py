@@ -4,4 +4,3 @@ TOKEN = "318756416:AAHSgDPf-XJWUuImHoEKoJqvWAZf2TSqQgU"  # Deptoon_bot
 
 # URL = "https://deptoon.herokuapp.com/{}".format(TOKEN)
 URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
-DATABASE_URL = "https://dry-mesa-62011.herokuapp.com/"
