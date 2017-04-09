@@ -16,10 +16,10 @@ class Deptoon(telepot.helper.ChatHandler):
     def new_phrase(self, command, chat_id, id_sender):
         """ Agrega una frase para chaquetear al dawg """
         new_phrase = command.replace("/addchaqueteo", "").lstrip()
-        if new_phrase == "" or new_phrase == "@deptoon_bot":
+        if new_phrase.replace(" ", "") == "" or new_phrase == "@deptoon_bot":
             return "No puedes agregar '{}' al chaqueteo del dawg"
         elif id_sender == deptoon_user["dawg"]:
-            return "Sorry dawg, no puedes autochaquetearte"
+            return "{} fue agregado al chaqueteo del dawg... Jajaja claro que si, zoquete". format(new_phrase)
         db.add_element('dawg_list', chat_id, new_phrase)
         return "'{}' fue agregado al chaqueteo del dawg".format(new_phrase)
 
@@ -43,10 +43,10 @@ class Deptoon(telepot.helper.ChatHandler):
         index = command.replace("/deletechaqueteo", "").lstrip().split(',')
         phrases = db.get_elements('dawg_list', chat_id)
         for i, phrase in enumerate(phrases):
-            if str(i+1) == index:
+            if str(i+1) == str(index):
                 db.delete_tuple('dawg_list', chat_id, phrase)
                 return "{} - fue eliminada".format(phrase)
-        return "No se encontro la frase"
+        return "{} - {}".format(index, type(index))
 
     def add_products(self, command, chat_id):
         """ Agrega productos al carrito de supermercado """
