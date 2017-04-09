@@ -40,7 +40,7 @@ class Deptoon(telepot.helper.ChatHandler):
         """ Elimina una frase del listado para chaquetear al dawg """
         if id_sender == deptoon_user["dawg"]:
             return "Buen intento dawg, pero tu chaqueteo se queda"
-        index = command.replace("/deletechaqueteo", "").lstrip().split(',')[0]
+        index = command.replace("/deletechaqueteo", "").lstrip()
         phrases = db.get_elements('dawg_list', chat_id)
         for i, phrase in enumerate(phrases):
             if str(i+1) == str(index):
