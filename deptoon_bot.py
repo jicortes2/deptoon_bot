@@ -46,7 +46,7 @@ class Deptoon(telepot.helper.ChatHandler):
             if str(i+1) == str(index):
                 db.delete_tuple('dawg_list', chat_id, phrase)
                 return "{} - fue eliminada".format(phrase)
-        return "{} - {}".format(index, type(index))
+        return "No se encontro la frase"
 
     def add_products(self, command, chat_id):
         """ Agrega productos al carrito de supermercado """
