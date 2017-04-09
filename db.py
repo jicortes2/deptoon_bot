@@ -51,7 +51,7 @@ def delete_tuple(table, chat_id, element):
     conn = _access()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
-    cur.execute("DELETE FROM {} WHERE chat = {} AND element = {}".format(table, chat_id, element))
+    cur.execute("DELETE FROM {} WHERE chat = {} AND element = '{}'".format(table, chat_id, element))
     conn.close()
 
 
