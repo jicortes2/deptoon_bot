@@ -13,12 +13,12 @@ class Deptoon(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
         super(Deptoon, self).__init__(*args, **kwargs)
 
-    def new_phrase(self, command, chat_id, user_id):
+    def new_phrase(self, command, chat_id, id_sender):
         """ Agrega una frase para chaquetear al dawg """
         new_phrase = command.replace("/addchaqueteo", "").lstrip()
         if new_phrase == "" or new_phrase == "@deptoon_bot":
             return "No puedes agregar '{}' al chaqueteo del dawg"
-        elif user_id == deptoon_user["dawg"]:
+        elif id_sender == deptoon_user["dawg"]:
             return "Sorry dawg, no puedes autochaquetearte"
         db.add_element('dawg_list', chat_id, new_phrase)
         return "'{}' fue agregado al chaqueteo del dawg".format(new_phrase)
@@ -36,8 +36,10 @@ class Deptoon(telepot.helper.ChatHandler):
         datos = db.get_elements('dawg_list', chat_id)
         return choice(datos)
 
-    def delete_phrase(self, command, chat_id):
+    def delete_phrase(self, command, chat_id, id_sender):
         """ Elimina una frase del listado para chaquetear al dawg """
+        if id_sender == deptoon_user["dawg"]:
+            return "Buen intento dawg, pero tu chaqueteo se queda"
         index = command.replace("/deletechaqueteo", "").lstrip().split(',')
         phrases = db.get_elements('dawg_list', chat_id)
         for i, phrase in enumerate(phrases):
@@ -72,15 +74,15 @@ class Deptoon(telepot.helper.ChatHandler):
             result += "- {}\n".format(prod)
         return result
 
-    def yow_yow(self, user_id, chat_id):
+    def yow_yow(self, id_sender, chat_id):
         """ Send yow yow sticker depending of the user """
-        if user_id == deptoon_user["cris"]:  # Cristian
+        if id_sender == deptoon_user["cris"]:  # Cristian
             id_sticker = "CAADAQADDAADDNuWDOx7HiPygX7BAg"
-        elif user_id == deptoon_user["juan"]:  # Juan
+        elif id_sender == deptoon_user["juan"]:  # Juan
             id_sticker = "CAADAQADCAADDNuWDHREnLw8FWs0Ag"
-        elif user_id == deptoon_user["cati"]:  # Cati
+        elif id_sender == deptoon_user["cati"]:  # Cati
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
-        elif user_id == deptoon_user["dawg"]:  # Dawg
+        elif id_sender == deptoon_user["dawg"]:  # Dawg
             id_sticker = "CAADAQADBgADDNuWDKuOezm3e36nAg"
         else:
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
@@ -107,7 +109,7 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = self.get_phrases(chat_id)
         # TODO: create db delete tuple
         elif text.startswith("/deletechaqueteo"):
-            answer = self.delete_phrase(text, chat_id)
+            answer = self.delete_phrase(text, chat_id, user_id)
 
         elif text.startswith("/add"):
             answer = self.add_products(text, chat_id)
