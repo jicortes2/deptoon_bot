@@ -29,8 +29,7 @@ def add_element(table, chat_id, thing):
         conn = _access()
         cur = conn.cursor()
         conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
-        query = "INSERT INTO %s (chat, element) VALUES (%s, '%s')"
-        cur.execute(query, (table, chat_id, thing))
+        cur.execute("INSERT INTO {} (chat, element) VALUES ({}, '{}')".format(table, chat_id, thing))
         conn.close()
         return True
     except IntegrityError:
@@ -41,8 +40,7 @@ def get_elements(table, chat_id):
     """ Returns the a list with all the elements """
     conn = _access()
     cur = conn.cursor()
-    query = "SELECT * FROM %s WHERE chat = %s"
-    cur.execute(query, (table, chat_id))
+    cur.execute("SELECT * FROM {} WHERE chat = {}".format(table, chat_id))
     tuples = cur.fetchall()
     conn.close()
     return [i[1] for i in tuples]
@@ -53,8 +51,7 @@ def delete_tuple(table, chat_id, element):
     conn = _access()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
-    query = "DELETE FROM %s WHERE chat = %s AND element = '%s'"
-    cur.execute(query, (table, chat_id, element))
+    cur.execute("DELETE FROM {} WHERE chat = {} AND element = '{}'".format(table, chat_id, element))
     conn.close()
 
 
@@ -63,8 +60,7 @@ def clear_table(table, chat_id):
     conn = _access()
     conn.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
     cur = conn.cursor()
-    query = "DELETE FROM %s WHERE chat = %s"
-    cur.execute(query, (table, chat_id))
+    cur.execute("DELETE FROM {} WHERE chat = {}".format(table, chat_id))
     conn.close()
 
 
