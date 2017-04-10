@@ -84,6 +84,10 @@ class Deptoon(telepot.helper.ChatHandler):
             id_sticker = "CAADAQADTQADDNuWDMI0-pPy7z-7Ag"
         elif id_sender == deptoon_user["dawg"]:  # Dawg
             id_sticker = "CAADAQADBgADDNuWDKuOezm3e36nAg"
+        elif id_sender == deptoon_user["rocio"]:  # Rocio
+            id_sticker = "CAADAgADSAEAAhhC7giR8ls8wm-QoQI"
+        elif id_sender == deptoon_user["belen"]:  # Tor
+            id_sticker = "CAADAgADQwEAAvR7GQABHefwRWSx0_IC"
         else:
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
         BOT.sendSticker(chat_id, sticker=id_sticker)
