@@ -55,7 +55,8 @@ class Deptoon(telepot.helper.ChatHandler):
             return "Debes ingresar los productos asi: /add prod1, prod2, ..."
         else:
             for product in products:
-                db.add_element('shop', chat_id, product)
+                if len(product.lstrip()) > 0:
+                    db.add_element('shop', chat_id, product.lstrip())
             if len(products) == 1:
                 return "Se agregó 1 producto al carrito"
             else:
