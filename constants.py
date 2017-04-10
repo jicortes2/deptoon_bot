@@ -6,7 +6,9 @@ deptoon_user = {
 	"cris": 255008894,
     "juan": 211213068,
     "cati": 253564139,
-    "dawg": 135558671}
+    "dawg": 135558671,
+    "rocio": 271969297,
+    "belen": 285262132}
 
 # URL = "https://deptoon.herokuapp.com/{}".format(TOKEN)
 URL = "https://dry-mesa-62011.herokuapp.com/{}".format(TOKEN)
