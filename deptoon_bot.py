@@ -108,10 +108,6 @@ class Deptoon(telepot.helper.ChatHandler):
                 BOT.sendMessage(chat_id, image)
                 sleep(2)
 
-
-
-
-
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
