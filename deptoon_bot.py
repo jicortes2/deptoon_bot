@@ -100,7 +100,6 @@ class Deptoon(telepot.helper.ChatHandler):
         base_url = "http://www.papajohns.cl"
         content = requests.get(base_url+'/pages/oclanding')
         soup = BeautifulSoup(content.text, 'html.parser')
-        # print(soup)
         promo = soup.find("ul", {"id": "carousel_ul"})
         for img in promo:
             if img.find('img') != -1:
