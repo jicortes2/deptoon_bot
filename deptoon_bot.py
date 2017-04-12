@@ -105,7 +105,7 @@ class Deptoon(telepot.helper.ChatHandler):
         for img in promo:
             if img.find('img') != -1:
                 image = base_url + img.find('img')['src'][2:]
-                BOT.sendMessage(chat_id, image, parse_mode="Markdown")
+                BOT.sendMessage(chat_id, image)
                 sleep(2)
 
 
