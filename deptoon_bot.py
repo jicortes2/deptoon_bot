@@ -1,5 +1,8 @@
 import telepot
 import db
+from bs4 import BeautifulSoup
+import requests
+from time import sleep
 from random import choice
 from telepot.delegate import per_chat_id, create_open, pave_event_space
 from constants import TOKEN, deptoon_user
@@ -93,6 +96,22 @@ class Deptoon(telepot.helper.ChatHandler):
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
         BOT.sendSticker(chat_id, sticker=id_sticker)
 
+    def papajohns(self, chat_id):
+        base_url = "http://www.papajohns.cl"
+        content = requests.get(base_url+'/pages/oclanding')
+        soup = BeautifulSoup(content.text, 'html.parser')
+        # print(soup)
+        promo = soup.find("ul", {"id": "carousel_ul"})
+        for img in promo:
+            if img.find('img') != -1:
+                image = base_url + img.find('img')['src'][2:]
+                BOT.sendMessage(chat_id, image, parse_mode="Markdown")
+                sleep(2)
+
+
+
+
+
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
@@ -130,6 +149,10 @@ class Deptoon(telepot.helper.ChatHandler):
 
         elif text.startswith("/yowyow"):
             answer = self.yow_yow(user_id, chat_id)
+            return
+
+        elif text.startswith("/papajohns"):
+            self.papajohns(chat_id)
             return
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
