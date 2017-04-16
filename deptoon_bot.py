@@ -97,6 +97,9 @@ class Deptoon(telepot.helper.ChatHandler):
         BOT.sendSticker(chat_id, sticker=id_sticker)
 
     def papajohns(self, chat_id):
+        """ Scraping a la pagina de papa johns que envia las imagenes del
+        carousel del inicio, en caso de que la página cambie es necesario
+        actualizar """
         base_url = "http://www.papajohns.cl"
         content = requests.get(base_url+'/pages/oclanding')
         soup = BeautifulSoup(content.text, 'html.parser')
@@ -126,7 +129,7 @@ class Deptoon(telepot.helper.ChatHandler):
 
         elif text.startswith("/listadawg"):
             answer = self.get_phrases(chat_id)
-        # TODO: create db delete tuple
+
         elif text.startswith("/deletechaqueteo"):
             answer = self.delete_phrase(text, chat_id, user_id)
 

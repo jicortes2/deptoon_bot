@@ -9,8 +9,7 @@ from constants import DB_NAME, DB_HOST, DB_PASS, DB_PORT, DB_USER
 
 
 def _access(option=True):
-    """ Returns connection to deptoon database (except when you're
-    creating it, on that case returns heroku main database) """
+    """ Returns connection to deptoon database  """
     # urlparse.uses_netloc.append("postgres")
     # url = urlparse.urlparse(os.environ[DATABASE_URL])
     # db = url.path[1:]
@@ -62,6 +61,3 @@ def clear_table(table, chat_id):
     cur = conn.cursor()
     cur.execute("DELETE FROM {} WHERE chat = {}".format(table, chat_id))
     conn.close()
-
-
-# check_db()
