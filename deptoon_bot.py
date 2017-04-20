@@ -163,7 +163,7 @@ class Deptoon(telepot.helper.ChatHandler):
         BOT.sendSticker(chat_id, sticker="CAADBAAD5gADydJaAAES6wuk1Er55wI")
         sleep(2)
         end_aragorn = "https://www.youtube.com/watch?v=ApUu1DA5HCs"
-        BOT.sendMessage(chat_id,end_aragorn, parse_mode="html")
+        BOT.sendMessage(chat_id, end_aragorn, parse_mode="html")
 
 
 UPDATE_QUEUE = Queue()  # channel between `app` and `bot`
