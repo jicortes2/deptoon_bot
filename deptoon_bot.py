@@ -146,14 +146,24 @@ class Deptoon(telepot.helper.ChatHandler):
             answer = "Mensaje enviado por {}".format(str(user_id))
 
         elif text.startswith("/yowyow"):
-            answer = self.yow_yow(user_id, chat_id)
+            self.yow_yow(user_id, chat_id)
             return
 
         elif text.startswith("/papajohns"):
             self.papajohns(chat_id)
             return
 
+        elif text.startswith("/thefinalday"):
+            self.final_day(chat_id)
+            return
+
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
+
+    def final_day(self, chat_id):
+        BOT.sendSticker(chat_id, sticker="CAADBAAD5gADydJaAAES6wuk1Er55wI")
+        sleep(2)
+        end_aragorn = "https://www.youtube.com/watch?v=ApUu1DA5HCs"
+        BOT.sendMessage(chat_id,end_aragorn, parse_mode="html")
 
 
 UPDATE_QUEUE = Queue()  # channel between `app` and `bot`
