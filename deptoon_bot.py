@@ -114,8 +114,16 @@ class Deptoon(telepot.helper.ChatHandler):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
         if content_type != "text":
+            BOT.sendMessage(chat_id, "entro a distinto content_type")
+            sleep(1)
             if msg.get("document", False):
+                BOT.sendMessage(chat_id, "entro a document")
                 gif_id = msg["document"]["file_id"]
+                BOT.sendMessage(chat_id, str(gif_id))
+                sleep(1)
+            elif msg.get("video", False):
+                BOT.sendMessage(chat_id, "entro a video")
+                gif_id = msg["video"]["file_id"]
                 BOT.sendMessage(chat_id, str(gif_id))
                 sleep(1)
             return
