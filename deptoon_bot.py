@@ -175,7 +175,7 @@ class Deptoon(telepot.helper.ChatHandler):
         elif text.startswith("/getid"):
             answer = "Mensaje enviado por {}".format(str(user_id))
 
-        elif text.startswith("/yowyow") or text == "yow yow":
+        elif text.startswith("/yowyow") or text.lower() == "yow yow":
             self.yow_yow(user_id, chat_id)
             return
 
@@ -200,7 +200,7 @@ class Deptoon(telepot.helper.ChatHandler):
         sleep(3)
         answer = "A day may come when the courage of men fails, when we forsake our friends and break all bonds of fellowship but..."
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
-        sleep(1)
+        sleep(2)
         end_aragorn = "https://www.youtube.com/watch?v=ApUu1DA5HCs"
         BOT.sendMessage(chat_id, end_aragorn, parse_mode="html")
 
