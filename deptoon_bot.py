@@ -113,23 +113,29 @@ class Deptoon(telepot.helper.ChatHandler):
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
-        if content_type:
-            BOT.sendMessage(chat_id, "entro a distinto content_type")
-            sleep(1)
-            if msg.get("document", False):
-                BOT.sendMessage(chat_id, "entro a document")
-                gif_id = msg["document"]["file_id"]
-                BOT.sendMessage(chat_id, str(gif_id))
-                sleep(1)
-            elif msg.get("video", False):
-                BOT.sendMessage(chat_id, "entro a video")
-                gif_id = msg["video"]["file_id"]
-                BOT.sendMessage(chat_id, str(gif_id))
-                sleep(1)
-            return
-
         if msg.get("document", False):
+            BOT.sendMessage(chat_id, "entro a document")
             gif_id = msg["document"]["file_id"]
+            BOT.sendMessage(chat_id, str(gif_id))
+            sleep(1)
+        elif msg.get("video", False):
+            BOT.sendMessage(chat_id, "entro a video")
+            gif_id = msg["video"]["file_id"]
+            BOT.sendMessage(chat_id, str(gif_id))
+            sleep(1)
+        elif msg.get("sticker", False):
+            BOT.sendMessage(chat_id, "entro a sticker")
+            gif_id = msg["sticker"]["file_id"]
+            BOT.sendMessage(chat_id, str(gif_id))
+            sleep(1)
+        elif msg.get("photo", False):
+            BOT.sendMessage(chat_id, "entro a photo")
+            gif_id = msg["photo"]["file_id"]
+            BOT.sendMessage(chat_id, str(gif_id))
+            sleep(1)
+        elif msg.get("audio", False):
+            BOT.sendMessage(chat_id, "entro a audio")
+            gif_id = msg["video"]["file_id"]
             BOT.sendMessage(chat_id, str(gif_id))
             sleep(1)
 
