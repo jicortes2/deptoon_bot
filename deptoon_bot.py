@@ -141,7 +141,9 @@ class Deptoon(telepot.helper.ChatHandler):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
 
-        if False:  # Cambiar para debuggear o saber el type de algo
+        if False:  
+            # Cambiar para debuggear o saber el type de algo
+            # Recuerda cambiar el setting de privacy mode
             self.find_message_type(msg, chat_id)        
 
         text = msg['text']
@@ -173,7 +175,7 @@ class Deptoon(telepot.helper.ChatHandler):
         elif text.startswith("/getid"):
             answer = "Mensaje enviado por {}".format(str(user_id))
 
-        elif text.startswith("/yowyow"):
+        elif text.startswith("/yowyow") or text == "yow yow":
             self.yow_yow(user_id, chat_id)
             return
 
