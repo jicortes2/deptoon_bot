@@ -116,10 +116,9 @@ class Deptoon(telepot.helper.ChatHandler):
         if content_type != "text":
             return
 
-        BOT.sendMessage(deptoon_user["cris"], "hola")
         if msg.get("document", False):
-            video_id = msg["document"]["file_id"]
-            BOT.sendMessage(chat_id, str(id))
+            gif_id = msg["document"]["file_id"]
+            BOT.sendMessage(chat_id, str(gif_id))
             sleep(1)
 
         text = msg['text']
