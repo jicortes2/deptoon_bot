@@ -110,9 +110,7 @@ class Deptoon(telepot.helper.ChatHandler):
                 BOT.sendMessage(chat_id, image)
                 sleep(2)
 
-    def on_chat_message(self, msg):
-        content_type, chat_type, chat_id = telepot.glance(msg)
-        user_id = msg["from"]["id"]
+    def find_message_type(self, msg, chat_id):
         if msg.get("document", False):
             BOT.sendMessage(chat_id, "entro a document")
             gif_id = msg["document"]["file_id"]
@@ -138,6 +136,13 @@ class Deptoon(telepot.helper.ChatHandler):
             gif_id = msg["video"]["file_id"]
             BOT.sendMessage(chat_id, str(gif_id))
             sleep(1)
+
+    def on_chat_message(self, msg):
+        content_type, chat_type, chat_id = telepot.glance(msg)
+        user_id = msg["from"]["id"]
+
+        if False:  # Cambiar para debuggear o saber el type de algo
+            self.find_message_type(msg, chat_id)        
 
         text = msg['text']
         answer = ""
@@ -188,7 +193,8 @@ class Deptoon(telepot.helper.ChatHandler):
         answer = "Llegó el día... no podemos evitar lo inevitable..."
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
         sleep(3)
-        # Añadir gif de homero...
+        # Homero
+        BOT.sendDocument(chat_id, document="CgADBAADnw4AAq0bZAebvzwdpMqs3AI")
         sleep(3)
         answer = "A day may come when the courage of men fails, when we forsake our friends and break all bonds of fellowship but..."
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
