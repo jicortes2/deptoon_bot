@@ -137,6 +137,21 @@ class Deptoon(telepot.helper.ChatHandler):
             BOT.sendMessage(chat_id, str(gif_id))
             sleep(1)
 
+    def final_day(self, chat_id):
+        BOT.sendSticker(chat_id, sticker="CAADBAAD5gADydJaAAES6wuk1Er55wI")
+        sleep(2)
+        answer = "Llegó el día... no podemos evitar lo inevitable..."
+        BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
+        sleep(3)
+        # Homero
+        BOT.sendDocument(chat_id, document="CgADBAADnw4AAq0bZAebvzwdpMqs3AI")
+        sleep(3)
+        answer = "A day may come when the courage of men fails, when we forsake our friends and break all bonds of fellowship but..."
+        BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
+        sleep(2)
+        end_aragorn = "https://www.youtube.com/watch?v=ApUu1DA5HCs"
+        BOT.sendMessage(chat_id, end_aragorn, parse_mode="html")
+
     def on_chat_message(self, msg):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
@@ -188,21 +203,6 @@ class Deptoon(telepot.helper.ChatHandler):
             return
 
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
-
-    def final_day(self, chat_id):
-        BOT.sendSticker(chat_id, sticker="CAADBAAD5gADydJaAAES6wuk1Er55wI")
-        sleep(2)
-        answer = "Llegó el día... no podemos evitar lo inevitable..."
-        BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
-        sleep(3)
-        # Homero
-        BOT.sendDocument(chat_id, document="CgADBAADnw4AAq0bZAebvzwdpMqs3AI")
-        sleep(3)
-        answer = "A day may come when the courage of men fails, when we forsake our friends and break all bonds of fellowship but..."
-        BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
-        sleep(2)
-        end_aragorn = "https://www.youtube.com/watch?v=ApUu1DA5HCs"
-        BOT.sendMessage(chat_id, end_aragorn, parse_mode="html")
 
 
 UPDATE_QUEUE = Queue()  # channel between `app` and `bot`
