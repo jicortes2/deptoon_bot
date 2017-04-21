@@ -116,8 +116,8 @@ class Deptoon(telepot.helper.ChatHandler):
         if content_type != "text":
             return
 
-        if msg.get("video", False):
-            video_id = msg["video"]["file_id"]
+        if msg.get("document", False):
+            video_id = msg["document"]["file_id"]
             BOT.sendMessage(chat_id, str(id))
             sleep(1)
 
