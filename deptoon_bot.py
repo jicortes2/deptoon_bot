@@ -146,7 +146,7 @@ class Deptoon(telepot.helper.ChatHandler):
         # Homero
         BOT.sendDocument(chat_id, document="CgADBAADnw4AAq0bZAebvzwdpMqs3AI")
         sleep(3)
-        answer = "A day may come when the courage of men fails, when we forsake our friends and break all bonds of fellowship but..."
+        answer = "Pero no todo esta perdido..."
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
         sleep(2)
         end_aragorn = "https://www.youtube.com/watch?v=ApUu1DA5HCs"
