@@ -1,82 +1,41 @@
-import telepot
-import db
+"""Deptoon_bot main handler"""
+from time import sleep
 from bs4 import BeautifulSoup
 import requests
-from time import sleep
-from random import choice
+import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
-from constants import TOKEN, deptoon_user
+from telepot.loop import MessageLoop
+from constants import TOKEN, deptoon_user, BOT_NAME, LOCAL_TEST, TEST_TOKEN
+from telegram_handler import TelegramHandler as TH
 try:
     from Queue import Queue
 except ImportError:
     from queue import Queue
 
 
+def parse_command(command):
+    command.replace("@{}".format(BOT_NAME), "")
+    return getattr(TH, command, TH.default)
+
+
 class Deptoon(telepot.helper.ChatHandler):
     def __init__(self, *args, **kwargs):
         super(Deptoon, self).__init__(*args, **kwargs)
 
-    def new_phrase(self, command, chat_id, id_sender):
-        """ Agrega una frase para chaquetear al dawg """
-        new_phrase = command.replace("/addchaqueteo", "").lstrip()
-        if new_phrase.replace(" ", "") == "" or new_phrase == "@deptoon_bot":
-            return "No puedes agregar '{}' al chaqueteo del dawg"
-        elif id_sender == deptoon_user["dawg"]:
-            return "{} fue agregado al chaqueteo del dawg... Jajaja claro que si, zoquete". format(new_phrase)
-        db.add_element('dawg_list', chat_id, new_phrase)
-        return "'{}' fue agregado al chaqueteo del dawg".format(new_phrase)
-
-    def get_phrases(self, chat_id):
-        """ Listado de frases para molestar al dawg """
-        result = "** Chaqueteando al Dawg **\n\n"
-        phrases = db.get_elements('dawg_list', chat_id)
-        for i, phrase in enumerate(phrases):
-            result += "{}.- {}\n".format(i+1, phrase)
-        return result
-
-    def get_phrase(self, chat_id):
-        """ Retorna una frase para molestar al dawg """
-        datos = db.get_elements('dawg_list', chat_id)
-        return choice(datos)
-
-    def delete_phrase(self, command, chat_id, id_sender):
-        """ Elimina una frase del listado para chaquetear al dawg """
-        if id_sender == deptoon_user["dawg"]:
-            return "Buen intento dawg, pero tu chaqueteo se queda"
-        index = command.replace("/deletechaqueteo", "").lstrip()
-        phrases = db.get_elements('dawg_list', chat_id)
-        for i, phrase in enumerate(phrases):
-            if str(i+1) == str(index):
-                db.delete_tuple('dawg_list', chat_id, phrase)
-                return "{} - fue eliminada".format(phrase)
-        return "No se encontro la frase"
-
-    def add_products(self, command, chat_id):
-        """ Agrega productos al carrito de supermercado """
-        products = command.replace("/add", "").lstrip().split(',')
-        if len(products[0]) == 0:
-            return "Debes ingresar los productos asi: /add prod1, prod2, ..."
-        else:
-            for product in products:
-                if len(product.lstrip()) > 0:
-                    db.add_element('shop', chat_id, product.lstrip())
-            if len(products) == 1:
-                return "Se agregó 1 producto al carrito"
-            else:
-                return "Se agregaron {} productos al carrito".format(len(products))
-
-    def clear_supermarket(self, chat_id):
-        """ Vacia el carrito de supermercado """
-        db.clear_table('shop', chat_id)
-        return "Gracias por su compra, espero que no hayas olvidado nada!"
-
-    def supermarket_list(self, chat_id):
-        """ Listado de elementos en el carrito """
-        result = "CARRITO DE SUPERMERCADO\n\n"
-        products = db.get_elements('shop', chat_id)
-        for prod in products:
-            result += "- {}\n".format(prod)
-        return result
+    def papajohns(self, *args):
+        """ Scraping a la pagina de papa johns que envia las imagenes del
+        carousel del inicio, en caso de que la página cambie es necesario
+        actualizar """
+        chat_id = args
+        base_url = "http://www.papajohns.cl"
+        content = requests.get(base_url+'/pages/oclanding')
+        soup = BeautifulSoup(content.text, 'html.parser')
+        promo = soup.find("ul", {"id": "carousel_ul"})
+        for img in promo:
+            if img.find('img') != -1:
+                image = base_url + img.find('img')['src'][2:]
+                BOT.sendMessage(chat_id, image)
+                sleep(2)
 
     def yow_yow(self, id_sender, chat_id):
         """ Send yow yow sticker depending of the user """
@@ -95,20 +54,6 @@ class Deptoon(telepot.helper.ChatHandler):
         else:
             id_sticker = "CAADBAADUQEAAtoAAQ4JYteU7EX3eYgC"
         BOT.sendSticker(chat_id, sticker=id_sticker)
-
-    def papajohns(self, chat_id):
-        """ Scraping a la pagina de papa johns que envia las imagenes del
-        carousel del inicio, en caso de que la página cambie es necesario
-        actualizar """
-        base_url = "http://www.papajohns.cl"
-        content = requests.get(base_url+'/pages/oclanding')
-        soup = BeautifulSoup(content.text, 'html.parser')
-        promo = soup.find("ul", {"id": "carousel_ul"})
-        for img in promo:
-            if img.find('img') != -1:
-                image = base_url + img.find('img')['src'][2:]
-                BOT.sendMessage(chat_id, image)
-                sleep(2)
 
     def find_message_type(self, msg, chat_id):
         if msg.get("document", False):
@@ -156,41 +101,15 @@ class Deptoon(telepot.helper.ChatHandler):
         content_type, chat_type, chat_id = telepot.glance(msg)
         user_id = msg["from"]["id"]
 
-        if False:  
+        if False:
             # Cambiar para debuggear o saber el type de algo
             # Recuerda cambiar el setting de privacy mode
-            self.find_message_type(msg, chat_id)        
+            self.find_message_type(msg, chat_id)
 
         text = msg['text']
         answer = ""
-        if text.startswith('/start'):
-            answer = "Yow yow aqui deptoon_bot listo para zorronear"
 
-        elif text.lower().startswith('/chaqueteardawg'):
-            answer = self.get_phrase(chat_id)
-
-        elif text.startswith("/addchaqueteo"):
-            answer = self.new_phrase(text, chat_id, user_id)
-
-        elif text.startswith("/listadawg"):
-            answer = self.get_phrases(chat_id)
-
-        elif text.startswith("/deletechaqueteo"):
-            answer = self.delete_phrase(text, chat_id, user_id)
-
-        elif text.startswith("/add"):
-            answer = self.add_products(text, chat_id)
-
-        elif text.startswith("/clear"):
-            answer = self.clear_supermarket(chat_id)
-
-        elif text.startswith("/supermercado"):
-            answer = self.supermarket_list(chat_id)
-
-        elif text.startswith("/getid"):
-            answer = "Mensaje enviado por {}".format(str(user_id))
-
-        elif text.startswith("/yowyow") or text.lower() == "yow yow":
+        if text.startswith("/yowyow") or text.lower() == "yow yow":
             self.yow_yow(user_id, chat_id)
             return
 
@@ -202,13 +121,27 @@ class Deptoon(telepot.helper.ChatHandler):
             self.final_day(chat_id)
             return
 
+        elif text.startswith("/"):
+            command = text.split(" ")[0].replace("/", "")
+            command = parse_command(command)
+            answer = command(text, chat_id, user_id)
+
         BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
 
 
-UPDATE_QUEUE = Queue()  # channel between `app` and `bot`
+if LOCAL_TEST:
+    BOT = telepot.DelegatorBot(TEST_TOKEN, [
+        pave_event_space()(
+            per_chat_id(), create_open, Deptoon, timeout=10),
+        ])
+    MessageLoop(BOT).run_as_thread()
+    while 1:
+        sleep(10)
+else:
+    UPDATE_QUEUE = Queue()  # channel between `app` and `bot`
 
-BOT = telepot.DelegatorBot(TOKEN, [
-    pave_event_space()(
-        per_chat_id(), create_open, Deptoon, timeout=10),
-])
-BOT.message_loop(source=UPDATE_QUEUE)  # take updates from queue
+    BOT = telepot.DelegatorBot(TOKEN, [
+        pave_event_space()(
+            per_chat_id(), create_open, Deptoon, timeout=10),
+    ])
+    BOT.message_loop(source=UPDATE_QUEUE)  # take updates from queue
