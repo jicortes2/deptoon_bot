@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 import requests
 import telepot
 from telepot.delegate import per_chat_id, create_open, pave_event_space
-from telepot.loop import MessageLoop
+# from telepot.loop import MessageLoop
 from constants import TOKEN, deptoon_user, BOT_NAME, LOCAL_TEST, TEST_TOKEN
 from telegram_handler import TelegramHandler as TH
 try:
@@ -130,11 +130,11 @@ class Deptoon(telepot.helper.ChatHandler):
 
 
 if LOCAL_TEST:
-    BOT = telepot.DelegatorBot(TEST_TOKEN, [
-        pave_event_space()(
-            per_chat_id(), create_open, Deptoon, timeout=10),
-        ])
-    MessageLoop(BOT).run_as_thread()
+    # BOT = telepot.DelegatorBot(TEST_TOKEN, [
+    #     pave_event_space()(
+    #         per_chat_id(), create_open, Deptoon, timeout=10),
+    #     ])
+    # MessageLoop(BOT).run_as_thread()
     while 1:
         sleep(10)
 else:

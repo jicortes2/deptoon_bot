@@ -88,6 +88,6 @@ class TelegramHandler:
         return result
 
     @staticmethod
-    def default():
+    def default(*args):
         """ Default action in case of wrong method """
         pass
