@@ -25,7 +25,7 @@ class TelegramHandler:
         return "'{}' fue agregado al chaqueteo del dawg".format(new_phrase)
 
     @staticmethod
-    def get_phrases(*args):
+    def chaqueteandawg(*args):
         """ Listado de frases para molestar al dawg """
         command, chat_id, id_sender = args
         result = "** Chaqueteando al Dawg **\n\n"
@@ -35,7 +35,7 @@ class TelegramHandler:
         return result
 
     @staticmethod
-    def get_phrase(*args):
+    def chaquetear(*args):
         """ Retorna una frase para molestar al dawg """
         command, chat_id, id_sender = args
         datos = db.get_elements('dawg_list', chat_id)
@@ -56,7 +56,7 @@ class TelegramHandler:
         return "No se encontro la frase"
 
     @staticmethod
-    def add_products(*args):
+    def add(*args):
         """ Agrega productos al carrito de supermercado """
         command, chat_id, id_sender = args
         products = command.replace("/add", "").lstrip().split(',')
@@ -71,7 +71,7 @@ class TelegramHandler:
             return "Se agregaron {} productos al carrito".format(len(products))
 
     @staticmethod
-    def clear_supermarket(*args):
+    def clear_list(*args):
         """ Vacia el carrito de supermercado """
         command, chat_id, id_sender = args
         db.clear_table('shop', chat_id)
@@ -90,4 +90,4 @@ class TelegramHandler:
     @staticmethod
     def default(*args):
         """ Default action in case of wrong method """
-        pass
+        return "Default not set yet"
