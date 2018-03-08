@@ -14,7 +14,7 @@ except ImportError:
 
 
 def parse_command(command):
-    command.replace("@{}".format(BOT_NAME), "")
+    command = command.replace("@{}".format(BOT_NAME), "")
     return getattr(TH, command, TH.default)
 
 

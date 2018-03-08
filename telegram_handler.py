@@ -5,7 +5,13 @@ import db
 
 
 class TelegramHandler:
-    """Telegram commands handler"""
+    """
+    new_phrase(frase) - agrega la frase para chaquetear al dawg
+    chaqueteandawg - retorna la lista de chaqueteando al dawg
+    chaquetear - retorna una frase al azar de la lista del dawg
+    add(p1, p2, p3...) - recibe productos separados por ',' y los agrega al carrito
+    clear_list - vacia el carrito de supermercado
+    supermarket_list - retorna la lista del supermercado"""
     @staticmethod
     def start():
         """Deptoon_bot starting method"""
@@ -90,4 +96,4 @@ class TelegramHandler:
     @staticmethod
     def default(*args):
         """ Default action in case of wrong method """
-        return "Default not set yet"
+        return TelegramHandler.__doc__
