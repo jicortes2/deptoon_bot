@@ -126,7 +126,7 @@ class Deptoon(telepot.helper.ChatHandler):
             command = parse_command(command)
             answer = command(text, chat_id, user_id)
 
-        BOT.sendMessage(chat_id, answer, parse_mode="Markdown")
+        BOT.sendMessage(chat_id, answer, parse_mode="html")
 
 
 if LOCAL_TEST:
